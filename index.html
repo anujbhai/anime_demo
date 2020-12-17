@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AnimeJS - JS Animation Engine</title>
+
+	<link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+	<div class="demo-wrapper">
+		<div class="timer">
+			<span class="display_minute">1</span>:<span class="display_second">00</span>
+		</div>
+
+		<div class="circle_outer">
+			<div class="circle_inner"></div>
+		</div>
+
+		<div class="timer_controls">
+			<div class="timer_control_item timer_control_toggle">
+				<p>Play</p>
+				<button id="timer_toggle" class="btn btn_play"></button>
+			</div>
+
+			<div class="timer_control_item">
+				<p>Reset</p>
+				<button class="btn btn_reset"></button>
+			</div>
+		</div>
+	</div>
+
+	<script src="./assets/js/lib/anime.min.js"></script>
+	<script src="./assets/js/ui_script.js"></script>
+</body>
+</html>

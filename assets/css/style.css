@@ -1,0 +1,82 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+/*----- Common elements -----*/
+.btn {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border-style: none;
+	cursor: pointer;
+	border: 1px solid #FFF;
+}
+
+/*----- Layout -----*/
+.demo-wrapper {
+	background-image: url("../images/bg_img2.jpeg");
+	height: inherit;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.circle_outer {
+	width: 200px;
+	height: 200px;
+	border: 1px solid rgba(255, 255, 255, 1);
+	border-radius: 50%;
+	align-self: center;
+	display: flex;
+	justify-content: center;
+}
+
+.circle_inner {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	align-self: center;
+	background: rgba(255, 255, 255, 1);
+}
+
+.timer {
+	text-align: center;
+	color: #FFF;
+}
+
+.timer_controls {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+}
+
+.timer_control_item {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.timer_control_item p { text-align: center; margin-bottom: 15px; color: #FFF; }
+.timer_control_item button { align-self: center; }
+
+.btn_play {
+	background: #00ad56;
+}
+.btn_reset {
+	background: #d13438;
+}
+.btn_pause {
+	background: #ffaa44;
+}
+
