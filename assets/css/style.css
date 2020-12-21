@@ -20,7 +20,12 @@ body {
 	border-style: none;
 	cursor: pointer;
 	border: 1px solid #FFF;
+	display: none;
 }
+.btn.active {
+	display: block;
+}
+
 
 /*----- Layout -----*/
 .demo-wrapper {
@@ -73,7 +78,7 @@ body {
 .btn_play {
 	background: #00ad56;
 }
-.btn_reset {
+.btn_restart {
 	background: #d13438;
 }
 .btn_pause {
