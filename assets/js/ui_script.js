@@ -45,28 +45,77 @@
 			clearInterval(interval);
 		};
 
+		const timerRestart = () => {
+			clearInterval(interval);
+			counter = 0;
+			timeleft = 60;
+			interval = setInterval(timerRun, 1000);
+		};
+
 		/* ----- Breathe-in/Breathe-out animation using AnimeJS ----- */
-		// AnimeJS timeline and properties
-		const sequence = anime.timeline({
+		// Instruction timeline and properties
+		const instructionText = anime.timeline({
 			easing: "easeInOutQuad",
-			duration: 5000,
-			delay: 1000,
-			endDelay: 1000,
+			duration: 600,
 			loop: false,
 			autoplay: false,
 			direction: "normal",
 		});
-		// AnimeJS selector and values
-		sequence.add({
-			targets: ".circle_inner",
-			scale: 0.01,
-			backgroundColor: ["rgba(255,255,255, 1)", "rgba(255,255,255, 0.2)"],
-		})
-		.add({
-			targets: ".circle_inner",
-			scale: "100%",
-			backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
-		}, "+=2000");
+		instructionText
+			.add({
+				targets: ".instruction_text1",
+				opacity: "1"
+			}, 0)
+			.add({
+				targets: ".instruction_text1",
+				opacity: "0"
+			}, "+=2000")
+			.add({
+				targets: ".instruction_text_hold",
+				opacity: "1"
+			})
+			.add({
+				targets: ".instruction_text_hold",
+				opacity: "0"
+			}, "+=3000")
+			.add({
+				targets: ".instruction_text2",
+				opacity: "1"
+			})
+			.add({
+				targets: ".instruction_text2",
+				opacity: "0"
+			}, "+=4000")
+			.add({
+				targets: ".instruction_text_hold",
+				opacity: "1"
+			})
+			.add({
+				targets: ".instruction_text_hold",
+				opacity: "0"
+			}, "+=3000");
+
+		// Circle timeline and properties
+		const sequence = anime.timeline({
+			easing: "easeInOutQuad",
+			loop: false,
+			autoplay: false,
+			direction: "normal",
+		});
+		sequence
+			.add({
+				targets: ".circle_inner",
+				scale: 0.01,
+				backgroundColor: ["rgba(255,255,255, 1)", "rgba(255,255,255, 0.2)"],
+				duration: 2000,
+			})
+			.add({
+				targets: ".circle_inner",
+				scale: 1,
+				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
+				duration: 4000,
+				endDelay: 3000
+			}, "+=5000");
 
 		/* ----- Click events ----- */
 		// Click play button to start timer
@@ -74,6 +123,8 @@
 			// countdowntimer start
 			timerStart();
 
+			// animation start
+			instructionText.play();
 			sequence.play();
 
 			// Toggle play button state
@@ -89,6 +140,8 @@
 			// countdowntimer pause
 			timerPause();
 
+			// animation pause
+			instructionText.pause();
 			sequence.pause();
 
 			// Toggle pause button state
@@ -101,7 +154,19 @@
 
 		// Click reset button to start all over
 		restartBtn.addEventListener("click", () => {
+			// countdowntimer restart
+			timerRestart();
+
+			// animation restart
+			instructionText.restart();
 			sequence.restart();
+
+			// Toggle play button state
+			if (playBtn.className == "btn btn_play active") {
+				playBtn.className = "btn btn_play ";
+				pauseBtn.className = "btn btn_pause active";
+				timerCtrlItemTxt.innerText = "Pause"
+			}
 		});
 	});
 }) ();
