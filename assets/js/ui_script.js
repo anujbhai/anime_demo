@@ -19,21 +19,59 @@
 			let min = Math.floor(s / 60);
 			let sec = s % 60;
 
-			// Min & sec Eg.'00:59'
-			return `${min.toString().padStart(2, 0)} : ${sec.toString().padStart(2, 0)}`;
+			return `${min.toString().padStart(2, 0)} : ${sec.toString().padStart(2, 0)}`; // Min & sec Eg.'00:59'
 		};
 
-		// Assign values to timer display
-		timer.innerHTML = convertSeconds(timeleft - counter);
+		timer.innerHTML = convertSeconds(timeleft - counter); // Assign values to timer display
 
 		/* ----- Activate timer ----- */
 		const timerRun = () => {
 			counter++;
 			timer.innerHTML = convertSeconds(timeleft - counter);
 
+			// When time runs out, stop timer and animation
 			if (counter == timeleft) {
 				clearInterval(interval);
 				counter = 0;
+				timeleft = 60;
+
+				// animation pause
+				instructionText.pause();
+				sequence.pause();
+				// holdDots.pause();
+
+				// Ending animation
+				const instructionTextEnd = anime.timeline({
+					easing: "easeInOutQuad",
+					duration: 600,
+					loop: false,
+					autoplay: false,
+					direction: "normal",
+				});
+				instructionTextEnd.add({
+					targets: ".instruction_text2",
+					opacity: "0"
+				});
+				instructionTextEnd.play()
+
+				const sequenceEnd = anime.timeline({
+					easing: "easeInOutQuad",
+					loop: false,
+					autoplay: false,
+					direction: "normal",
+				});
+				sequenceEnd.add({
+					targets: ".circle_inner",
+					scale: 1,
+					backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
+					duration: 1000,
+				});
+				sequenceEnd.play();
+
+				// Toggle play button state
+				playBtn.className = "btn btn_pause ";
+				pauseBtn.className = "btn btn_play active";
+				timerCtrlItemTxt.innerText = "Play";
 			}
 		};
 
@@ -57,7 +95,7 @@
 		const instructionText = anime.timeline({
 			easing: "easeInOutQuad",
 			duration: 600,
-			loop: false,
+			loop: true,
 			autoplay: false,
 			direction: "normal",
 		});
@@ -75,6 +113,11 @@
 				opacity: "1"
 			})
 			.add({
+				targets: ".hold_dot",
+				opacity: "1",
+				delay: anime.stagger(1000)
+			}, 0)
+			.add({
 				targets: ".instruction_text_hold",
 				opacity: "0"
 			}, "+=3000")
@@ -91,14 +134,23 @@
 				opacity: "1"
 			})
 			.add({
+				targets: ".hold_dot",
+				opacity: "1",
+				delay: anime.stagger(1000)
+			}, 0)
+			.add({
 				targets: ".instruction_text_hold",
 				opacity: "0"
 			}, "+=3000");
 
+
+		// const holdDots = anime({
+		// });
+
 		// Circle timeline and properties
 		const sequence = anime.timeline({
-			easing: "easeInOutQuad",
-			loop: false,
+			easing: "easeInOutCubic",
+			loop: true,
 			autoplay: false,
 			direction: "normal",
 		});
@@ -106,26 +158,26 @@
 			.add({
 				targets: ".circle_inner",
 				scale: 0.01,
-				backgroundColor: ["rgba(255,255,255, 1)", "rgba(255,255,255, 0.2)"],
+				backgroundColor: ["rgba(255,255,255, 0.7)", "rgba(255,255,255, 0.2)"],
 				duration: 2000,
 			})
 			.add({
 				targets: ".circle_inner",
 				scale: 1,
-				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
+				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 0.7)"],
 				duration: 4000,
-				endDelay: 3000
+				endDelay: 6000
 			}, "+=5000");
 
 		/* ----- Click events ----- */
 		// Click play button to start timer
 		playBtn.addEventListener("click", () => {
-			// countdowntimer start
-			timerStart();
+			timerStart(); // countdowntimer start
 
 			// animation start
 			instructionText.play();
 			sequence.play();
+			// holdDots.play();
 
 			// Toggle play button state
 			if (playBtn.className == "btn btn_play active") {
@@ -137,12 +189,12 @@
 
 		// Click pause button to hold animation
 		pauseBtn.addEventListener("click", () => {
-			// countdowntimer pause
-			timerPause();
+			timerPause(); // countdowntimer pause
 
 			// animation pause
 			instructionText.pause();
 			sequence.pause();
+			// holdDots.pause();
 
 			// Toggle pause button state
 			if (pauseBtn.className == "btn btn_pause active") {
@@ -154,12 +206,12 @@
 
 		// Click reset button to start all over
 		restartBtn.addEventListener("click", () => {
-			// countdowntimer restart
-			timerRestart();
+			timerRestart(); // countdowntimer restart
 
 			// animation restart
 			instructionText.restart();
 			sequence.restart();
+			// holdDots.restart();
 
 			// Toggle play button state
 			if (playBtn.className == "btn btn_play active") {
