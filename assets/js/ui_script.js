@@ -109,43 +109,13 @@
 				opacity: "0"
 			}, "+=2000")
 			.add({
-				targets: ".instruction_text_hold",
-				opacity: "1"
-			})
-			.add({
-				targets: ".hold_dot",
-				opacity: "1",
-				delay: anime.stagger(1000)
-			}, 0)
-			.add({
-				targets: ".instruction_text_hold",
-				opacity: "0"
-			}, "+=3000")
-			.add({
 				targets: ".instruction_text2",
 				opacity: "1"
 			})
 			.add({
 				targets: ".instruction_text2",
 				opacity: "0"
-			}, "+=4000")
-			.add({
-				targets: ".instruction_text_hold",
-				opacity: "1"
-			})
-			.add({
-				targets: ".hold_dot",
-				opacity: "1",
-				delay: anime.stagger(1000)
-			}, 0)
-			.add({
-				targets: ".instruction_text_hold",
-				opacity: "0"
-			}, "+=3000");
-
-
-		// const holdDots = anime({
-		// });
+			}, "+=1600");
 
 		// Circle timeline and properties
 		const sequence = anime.timeline({
@@ -166,8 +136,7 @@
 				scale: 1,
 				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 0.7)"],
 				duration: 4000,
-				endDelay: 6000
-			}, "+=5000");
+			});
 
 		/* ----- Click events ----- */
 		// Click play button to start timer
