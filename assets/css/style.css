@@ -49,12 +49,12 @@ body {
 }
 
 .circle_inner {
-	width: 200px;
-	height: 200px;
+	width: 2px;
+	height: 2px;
 	border-radius: 50%;
 	position: relative;
 	z-index: 1;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+	/*box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);*/
 	align-self: center;
 	background: rgba(255, 255, 255, 0.7);
 }
@@ -71,9 +71,9 @@ body {
 	opacity: 0;
 }
 
-.instruction_text_hold p:nth-child(2) { display: flex; justify-content: space-between; }
+/*.instruction_text_hold p:nth-child(2) { display: flex; justify-content: space-between; }
 .instruction_text_hold .hold_dot { display: block; width: 4px; height: 4px; background-color: rgba(0, 0, 0, 1); border-radius: 50%; opacity: 0; }
-
+*/
 .timer {
 	text-align: center;
 	color: #FFF;
