@@ -94,7 +94,7 @@
 		// Instruction timeline and properties
 		const instructionText = anime.timeline({
 			easing: "easeInOutQuad",
-			duration: 600,
+			// duration: 600,
 			loop: true,
 			autoplay: false,
 			direction: "normal",
@@ -103,19 +103,21 @@
 			.add({
 				targets: ".instruction_text1",
 				opacity: "1"
-			}, 0)
+			})
 			.add({
 				targets: ".instruction_text1",
-				opacity: "0"
-			}, "+=2000")
+				opacity: "0",
+				duration: 400,
+			}, "+=1600")
 			.add({
 				targets: ".instruction_text2",
-				opacity: "1"
+				opacity: "1",
 			})
 			.add({
 				targets: ".instruction_text2",
-				opacity: "0"
-			}, "+=1600");
+				opacity: "0",
+				duration: 400,
+			}, "+=3600");
 
 		// Circle timeline and properties
 		const sequence = anime.timeline({
@@ -127,15 +129,17 @@
 		sequence
 			.add({
 				targets: ".circle_inner",
-				scale: 0.01,
+				scale: 100,
 				backgroundColor: ["rgba(255,255,255, 0.7)", "rgba(255,255,255, 0.2)"],
 				duration: 2000,
+				endDelay: 1000
 			})
 			.add({
 				targets: ".circle_inner",
-				scale: 1,
+				scale: 0,
 				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 0.7)"],
 				duration: 4000,
+				endDelay: 1000
 			});
 
 		/* ----- Click events ----- */
