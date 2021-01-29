@@ -105,4 +105,12 @@ body {
 .btn_pause {
 	background: #ffaa44;
 }
+.btn_close {
+	background: rgba(0, 0, 0, 0);
+	display: block;
+	position: fixed;
+	top: 15px;
+	right: 15px;
+	color: #FFF;
+}
 
