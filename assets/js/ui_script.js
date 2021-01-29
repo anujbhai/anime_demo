@@ -4,6 +4,7 @@
 	let audio = new Howl({
 		src: ["ding.mp3"]
 	});
+	audio.play();
 
 	doc.addEventListener("DOMContentLoaded", () => {
 		// Variable values
@@ -38,6 +39,7 @@
 
 			// When time runs out, stop timer and animation
 			if (counter == timeleft) {
+				audio.play();
 				timerReset();
 			}
 		};
@@ -59,7 +61,6 @@
 
 		const timerReset = () => {
 			clearInterval(interval);
-			audio.play();
 
 			// animation pause / animation end
 			instructionText.restart();
@@ -180,8 +181,6 @@
 		// Click reset button to go back to start
 		resetBtn.addEventListener("click", () => {
 			timerReset(); // countdowntimer reset
-
-			
 		});
 	});
 }) ();
