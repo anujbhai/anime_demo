@@ -4,7 +4,6 @@
 	let audio = new Howl({
 		src: ["ding.mp3"]
 	});
-	audio.play();
 
 	doc.addEventListener("DOMContentLoaded", () => {
 		// Variable values
