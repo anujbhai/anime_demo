@@ -16,13 +16,7 @@
 		const restartBtn = doc.querySelector(".btn_restart");
 		const pauseBtn = doc.querySelector(".btn_pause");
 		const timer = doc.querySelector("#timer_display");
-		/*
-		 * New change start
-		 */
 		const resetBtn = doc.querySelector(".btn_close");
-		/*
-		 * New change end
-		 */
 
 		// variable element
 		let timerCtrlItemTxt = doc.querySelector("p.timer_control_item_text");
@@ -45,9 +39,6 @@
 			// When time runs out, stop timer and animation
 			if (counter == timeleft) {
 				timerReset();
-				counter = 0;
-				timeleft = 60;
-				timer.innerHTML = convertSeconds(timeleft - counter);
 			}
 		};
 
@@ -66,53 +57,25 @@
 			interval = setInterval(timerRun, 1000);
 		};
 
-		/*
-		 * New change start
-		 */
 		const timerReset = () => {
 			clearInterval(interval);
 			audio.play();
-			
-			// animation pause
+
+			// animation pause / animation end
+			instructionText.restart();
 			instructionText.pause();
+			sequence.restart();
 			sequence.pause();
 
-			// Ending animation
-			const instructionTextEnd = anime.timeline({
-				easing: "easeInOutQuad",
-				duration: 600,
-				loop: false,
-				autoplay: false,
-				direction: "normal",
-			});
-			instructionTextEnd.add({
-				targets: ".instruction_text2",
-				opacity: "0"
-			});
-			instructionTextEnd.play()
-
-			const sequenceEnd = anime.timeline({
-				easing: "easeInOutQuad",
-				loop: false,
-				autoplay: false,
-				direction: "normal",
-			});
-			sequenceEnd.add({
-				targets: ".circle_inner",
-				scale: 1,
-				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
-				duration: 1000,
-			});
-			sequenceEnd.play();
-
 			// Toggle play button state
-			playBtn.className = "btn btn_pause ";
-			pauseBtn.className = "btn btn_play active";
+			playBtn.className = "btn btn_play active";
+			pauseBtn.className = "btn btn_pause ";
 			timerCtrlItemTxt.innerText = "Play";
+
+			counter = 0;
+			timeleft = 60;
+			timer.innerHTML = convertSeconds(timeleft - counter);
 		}
-		/*
-		 * New change end
-		 */
 
 		/* ----- Breathe-in/Breathe-out animation using AnimeJS ----- */
 		// Instruction timeline and properties
@@ -165,28 +128,6 @@
 				endDelay: 1000
 			});
 
-		/*
-		 * New change start
-		 */
-		// Reset timeline and properties
-		const resetSequence = anime.timeline({
-			easing: "easeInOutCubic",
-			loop: false,
-			autoplay: false,
-			direction: "normal"
-		});
-		resetSequence
-			.add({
-				targets: ".circle_inner",
-				scale: 0,
-				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 0.7)"],
-				duration: 4000,
-				endDelay: 1000
-			})
-		/*
-		 * New change end
-		 */
-
 		/* ----- Click events ----- */
 		// Click play button to start timer
 		playBtn.addEventListener("click", () => {
@@ -236,35 +177,12 @@
 			}
 		});
 
-		/*
-		 * New change start
-		 */
 		// Click reset button to go back to start
 		resetBtn.addEventListener("click", () => {
 			timerReset(); // countdowntimer reset
 
-			// animation reset
-			instructionText.restart();
-			instructionText.pause();
-			sequence.restart();
-			sequence.pause();
-
-			resetSequence.play();
-
-			// Toggle pause button state
-			if (pauseBtn.className == "btn btn_pause active") {
-				pauseBtn.className = "btn btn_pause ";
-				playBtn.className = "btn btn_play active";
-				timerCtrlItemTxt.innerText = "Play"
-			}
-
-			counter = 0;
-			timeleft = 60;
-			timer.innerHTML = convertSeconds(timeleft - counter);
+			
 		});
-		/*
-		 * New change end
-		 */
 	});
 }) ();
 
