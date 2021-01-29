@@ -29,7 +29,7 @@ body {
 
 /*----- Layout -----*/
 .demo-wrapper {
-	background-image: url("../images/mobile-bg.jpg");
+	background-image: url("../images/bg_img2.png");
 	background-size: cover;
 	height: inherit;
 	display: flex;
