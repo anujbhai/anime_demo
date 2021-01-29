@@ -1,17 +1,30 @@
 (function() {
 	console.log("Script loaded .. .. ..");
 	const doc = document;
+	let audio = new Howl({
+		src: ["ding.mp3"]
+	});
 
 	doc.addEventListener("DOMContentLoaded", () => {
+		// Variable values
 		let counter = 0;
 		let timeleft = 60;
 		let interval;
 
+		// reference element (fixed)
 		const playBtn = doc.querySelector(".btn_play");
 		const restartBtn = doc.querySelector(".btn_restart");
 		const pauseBtn = doc.querySelector(".btn_pause");
 		const timer = doc.querySelector("#timer_display");
+		/*
+		 * New change start
+		 */
+		const resetBtn = doc.querySelector(".btn_close");
+		/*
+		 * New change end
+		 */
 
+		// variable element
 		let timerCtrlItemTxt = doc.querySelector("p.timer_control_item_text");
 
 		/* ----- Format Time ----- */
@@ -31,47 +44,10 @@
 
 			// When time runs out, stop timer and animation
 			if (counter == timeleft) {
-				clearInterval(interval);
+				timerReset();
 				counter = 0;
 				timeleft = 60;
-
-				// animation pause
-				instructionText.pause();
-				sequence.pause();
-				// holdDots.pause();
-
-				// Ending animation
-				const instructionTextEnd = anime.timeline({
-					easing: "easeInOutQuad",
-					duration: 600,
-					loop: false,
-					autoplay: false,
-					direction: "normal",
-				});
-				instructionTextEnd.add({
-					targets: ".instruction_text2",
-					opacity: "0"
-				});
-				instructionTextEnd.play()
-
-				const sequenceEnd = anime.timeline({
-					easing: "easeInOutQuad",
-					loop: false,
-					autoplay: false,
-					direction: "normal",
-				});
-				sequenceEnd.add({
-					targets: ".circle_inner",
-					scale: 1,
-					backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
-					duration: 1000,
-				});
-				sequenceEnd.play();
-
-				// Toggle play button state
-				playBtn.className = "btn btn_pause ";
-				pauseBtn.className = "btn btn_play active";
-				timerCtrlItemTxt.innerText = "Play";
+				timer.innerHTML = convertSeconds(timeleft - counter);
 			}
 		};
 
@@ -90,11 +66,58 @@
 			interval = setInterval(timerRun, 1000);
 		};
 
+		/*
+		 * New change start
+		 */
+		const timerReset = () => {
+			clearInterval(interval);
+			audio.play();
+			
+			// animation pause
+			instructionText.pause();
+			sequence.pause();
+
+			// Ending animation
+			const instructionTextEnd = anime.timeline({
+				easing: "easeInOutQuad",
+				duration: 600,
+				loop: false,
+				autoplay: false,
+				direction: "normal",
+			});
+			instructionTextEnd.add({
+				targets: ".instruction_text2",
+				opacity: "0"
+			});
+			instructionTextEnd.play()
+
+			const sequenceEnd = anime.timeline({
+				easing: "easeInOutQuad",
+				loop: false,
+				autoplay: false,
+				direction: "normal",
+			});
+			sequenceEnd.add({
+				targets: ".circle_inner",
+				scale: 1,
+				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 1)"],
+				duration: 1000,
+			});
+			sequenceEnd.play();
+
+			// Toggle play button state
+			playBtn.className = "btn btn_pause ";
+			pauseBtn.className = "btn btn_play active";
+			timerCtrlItemTxt.innerText = "Play";
+		}
+		/*
+		 * New change end
+		 */
+
 		/* ----- Breathe-in/Breathe-out animation using AnimeJS ----- */
 		// Instruction timeline and properties
 		const instructionText = anime.timeline({
 			easing: "easeInOutQuad",
-			// duration: 600,
 			loop: true,
 			autoplay: false,
 			direction: "normal",
@@ -142,6 +165,28 @@
 				endDelay: 1000
 			});
 
+		/*
+		 * New change start
+		 */
+		// Reset timeline and properties
+		const resetSequence = anime.timeline({
+			easing: "easeInOutCubic",
+			loop: false,
+			autoplay: false,
+			direction: "normal"
+		});
+		resetSequence
+			.add({
+				targets: ".circle_inner",
+				scale: 0,
+				backgroundColor: ["rgba(255,255,255, 0.2)", "rgba(255,255,255, 0.7)"],
+				duration: 4000,
+				endDelay: 1000
+			})
+		/*
+		 * New change end
+		 */
+
 		/* ----- Click events ----- */
 		// Click play button to start timer
 		playBtn.addEventListener("click", () => {
@@ -150,7 +195,6 @@
 			// animation start
 			instructionText.play();
 			sequence.play();
-			// holdDots.play();
 
 			// Toggle play button state
 			if (playBtn.className == "btn btn_play active") {
@@ -167,7 +211,6 @@
 			// animation pause
 			instructionText.pause();
 			sequence.pause();
-			// holdDots.pause();
 
 			// Toggle pause button state
 			if (pauseBtn.className == "btn btn_pause active") {
@@ -184,7 +227,6 @@
 			// animation restart
 			instructionText.restart();
 			sequence.restart();
-			// holdDots.restart();
 
 			// Toggle play button state
 			if (playBtn.className == "btn btn_play active") {
@@ -193,6 +235,36 @@
 				timerCtrlItemTxt.innerText = "Pause"
 			}
 		});
+
+		/*
+		 * New change start
+		 */
+		// Click reset button to go back to start
+		resetBtn.addEventListener("click", () => {
+			timerReset(); // countdowntimer reset
+
+			// animation reset
+			instructionText.restart();
+			instructionText.pause();
+			sequence.restart();
+			sequence.pause();
+
+			resetSequence.play();
+
+			// Toggle pause button state
+			if (pauseBtn.className == "btn btn_pause active") {
+				pauseBtn.className = "btn btn_pause ";
+				playBtn.className = "btn btn_play active";
+				timerCtrlItemTxt.innerText = "Play"
+			}
+
+			counter = 0;
+			timeleft = 60;
+			timer.innerHTML = convertSeconds(timeleft - counter);
+		});
+		/*
+		 * New change end
+		 */
 	});
 }) ();
 
